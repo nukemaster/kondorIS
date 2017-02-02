@@ -1,5 +1,4 @@
 <?php
-//todo: ACL
 namespace App\model;
 
 use Nette;
@@ -80,7 +79,7 @@ class OddilovkyAPI
 
     public function getHlas($hlasId)
     {
-        $sql = "SELECT hlas.name, REPLACE(k.text, '<br />', '\n') text, k.create 
+        $sql = "SELECT hlas.name, REPLACE(k.text, '<br>', '\n') text, k.create 
                   FROM komentare_hlasy k 
                   INNER JOIN hlas
                     ON k.hlas_id = hlas.id
@@ -100,7 +99,7 @@ class OddilovkyAPI
 
     public function addKomentarDiskuzeOnPointID($user_id, $text, $bodOddilovky )
     {
-        $text = replace($text);
+        $text = $this->replace($text);
         $sql = "INSERT INTO komentare_diskuze(user_id, text, bodOddilovky_id ) 
                   VALUES (?, ?, ?)";
         return $this->database->query($sql, $user_id, $text, $bodOddilovky);
@@ -108,7 +107,7 @@ class OddilovkyAPI
 
     public function addKomentareHlasyOnPointID($hlas_id, $text, $bod_oddilovky_id )
     {
-        $text = replace($text);
+        $text = $this->replace($text);
         $sql = "INSERT INTO komentare_hlasy(hlas_id, text, bod_oddilovky_id)
                   VALUES (?, ?, ?)";
         return $this->database->query($sql, $hlas_id, $text, $bod_oddilovky_id);
@@ -116,7 +115,8 @@ class OddilovkyAPI
 
     public function addBodOddilovky($oddilovka_id, $autor, $name, $popis, $text)
     {
-        $text = replace($text);
+        $text = $this->replace($text);
+        $text = $this->replace($popis);
         $sql = "INSERT INTO bod_oddilovky(oddilovka_id, autor, name, popis, text) 
                   VALUES (?, ?, ?, ?, ?)";
         return $this->database->query($sql, $oddilovka_id, $autor, $name, $popis, $text);
@@ -155,23 +155,22 @@ class OddilovkyAPI
 
     public function updateHlas($text, $hlaId)
     {
-        $text = replace($text);
+        $text = $this->replace($text);
         $sql = "UPDATE komentare_hlasy SET text = ? WHERE komentare_hlasy.id = ?";
         $this->database->query($sql, $text, $hlaId);
-        dump($text);
-        dump($hlaId);
     }
 
     public function newHlas($text, $hlas, $id)
     {
-        $text = replace($text);
+        $text = $this->replace($text);
         $sql = "INSERT INTO komentare_hlasy(text, hlas_id, bod_oddilovky_id) VALUES (?, ?, ?)";
         $this->database->query($sql, $text, $hlas, $id);
     }
 
     public function addOddilovka($userId, $date, $popis, $popisLong)
     {
-        $popis = replace($popis);
+        $popis = $this->replace($popis);
+        $popisLong = $this->replace($popisLong);
         $sql = "INSERT INTO oddilovky(autor, aktivni_do, popis_short, popis_long) VALUES (?, ?, ?, ?)";
         $this->database->query($sql, $userId, $date, $popis, $popisLong);
     }

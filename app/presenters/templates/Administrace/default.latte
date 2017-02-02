@@ -26,7 +26,7 @@
                     <div class="col s3">{$users1->name}</div>
                     <div class="col s4">{$users1->email}</div>
                     <div class="col s3">{input role}</div>
-                    <div class="col s2"><button class="btn" type="submit">Uložit</button></div>
+                    <div class="col s2"><button class="btn waves-effect waves-light" type="submit">Uložit</button></div>
                     {/form}
                 </div>
                 {/foreach}
@@ -47,7 +47,7 @@
                     {form updateHlasForm-$hlas->id}
                     <div class="col s1"><input type="checkbox" n:name="active" ><label n:name="active"></label></div>
                     <div class="col s9">{input hlasName}</div>
-                    <div class="col s2"><button class="btn" type="submit">Uložit</button></div>
+                    <div class="col s2"><button class="btn waves-effect waves-light" type="submit">Uložit</button></div>
                     {/form}
                 </div>
                 {/foreach}
@@ -60,7 +60,7 @@
                         {input name}
                     </div>
                     <div class="col s2">
-                        <button class="btn" type="submit">Vytvořit</button>
+                        <button class="btn waves-effect waves-light" type="submit">Vytvořit</button>
                     </div>
                 {/form}
                 </div>
@@ -83,7 +83,7 @@
                     <div class="col s1"><input type="checkbox" n:name="active" ><label n:name="active"></label></div>
                     <div class="col s5">{input hlas}</div>
                     <div class="col s4">{input user}</div>
-                    <div class="col s2"><button class="btn" type="submit">Uložit</button></div>
+                    <div class="col s2"><button class="btn waves-effect waves-light" type="submit">Uložit</button></div>
                     {/form}
                 </div>
                 {/foreach}
@@ -98,15 +98,11 @@
                         {input hlas}{label hlas}
                     </div>
                     <div class="col s2">
-                        <button class="btn" type="submit">Vytvořit</button>
+                        <button class="btn waves-effect waves-light" type="submit">Vytvořit</button>
                     </div>
                 {/form}
                 </div>
             </div>
         </div>
-    </li>
-    <li>
-        <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-        <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
     </li>
 </ul>

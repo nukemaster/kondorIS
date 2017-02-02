@@ -26,7 +26,7 @@
 			</ul>
 			<nav class="teal">
 				<div class="container">
-					<a href="#!" class="brand-logo" style="float: left">KondorIS</a>
+					<a href="{plink Homepage:default}" class="brand-logo" style="float: left">KondorIS</a>
 					<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 					<ul class="right hide-on-med-and-down">
 						<li><a href="#">About</a></li>
@@ -60,24 +60,22 @@
 			</div>
 		</footer>
 
+		<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+		<!-- SCRIPTS -->
+
+		<!--Import jQuery before materialize.js-->
+		<script type="text/javascript" src="{$path}/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="{$path}/materialize/js/materialize.min.js"></script>
 
 
-			<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
-			<!-- SCRIPTS -->
+        {ifset scripts}{include scripts}{/ifset}
 
-			<!--Import jQuery before materialize.js-->
-			<script type="text/javascript" src="{$path}/jquery-3.1.1.min.js"></script>
-			<script type="text/javascript" src="{$path}/materialize/js/materialize.min.js"></script>
-
-
-			{ifset scripts}{include scripts}{/ifset}
-
-			<script>
-				$( document ).ready(function(){
-					$(".button-collapse").sideNav();
-					$('select').material_select();
-				})
-			</script>
+		<script>
+            $( document ).ready(function(){
+                $(".button-collapse").sideNav();
+                $('select').material_select();
+            })
+		</script>
 
 	</body>
 </html>

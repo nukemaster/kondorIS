@@ -1,10 +1,10 @@
 {block content}
     <h1>Oddílovky</h1>
 
-    {if canCreateNewOddilovka}
+    {if $canCreateNewOddilovka}
        {form newOddilovkaForm}
-            {label date}{input date}
-            {label popis}{input popis}
+           {label date}{input date}
+           <div class="input-field">{label popis}{input popis}</div>
            <div class="input-field">
                {input popisLong class=>'materialize-textarea'}{label popisLong}
 

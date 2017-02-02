@@ -54,7 +54,6 @@ class OddilovkyPresenter extends \BasePresenter
     {
         $form = new UI\Form;
 
-
         $form->addText('date', 'datum')
             ->setAttribute('type', 'date')
             ->setAttribute('class', 'datepicker')
@@ -64,7 +63,9 @@ class OddilovkyPresenter extends \BasePresenter
                 return ($value == false)? false : true;
             }, "datumNeodpovida", 8);
         $form->addTextArea('popisLong', 'PopisLong');
-        $form->addText('popis', "Popis");
+        $form->addText('popis', "Popis")
+            ->setMaxLength(75)
+            ->setAttribute('length', '75');
         $form->onSuccess[] = [$this, 'newOddilovkaSuccess'];
         return $form;
     }
@@ -98,10 +99,10 @@ class OddilovkyPresenter extends \BasePresenter
         $form = new UI\Form;
         $form->addText('name', 'Jmeno')
             ->setMaxLength(50)
-            ->setAttribute('length', '50');;
+            ->setAttribute('length', '50');
         $form->addText('popis', 'Popis')
             ->setMaxLength(100)
-            ->setAttribute('length', '100');;
+            ->setAttribute('length', '100');
         $form->addTextArea('text', 'Text');
         $form->onSuccess[] = [$this, 'novyBodOddilovkySuccess'];
         
@@ -120,6 +121,9 @@ class OddilovkyPresenter extends \BasePresenter
     }
 
     public function newOddilovkaSuccess(UI\Form $form) {
+        if (! $this->user->isAllowed('oddilovka', 'create')) {
+            return false;
+        }
         $values = $form->getValues();
         $date = Nette\Utils\DateTime::createFromFormat("d M, Y",$values->date);
         $this->oddilovkyAPI->addOddilovka($this->user->id, $date, $values->popis, $values->popisLong);
@@ -127,26 +131,29 @@ class OddilovkyPresenter extends \BasePresenter
 
     public function prispevekDiskuzeSuccess(UI\Form $form)
     {
-        if (!$this->user->isAllowed('oddilovka', 'read')) {
-            $this->redirect('Homepage:default');
+        if (! $this->user->isAllowed('bodOddilovky', 'create')) {
+            return false;
         }
+
         $values = $form->getValues();
         $this->oddilovkyAPI->addKomentarDiskuzeOnPointID($this->user->id, $values->text, $this->getParameter('id'));
     }
     
     public function prispevekHlasyDiskuzeSussess(UI\Form $form)
     {
-        if (!$this->user->isAllowed('bodOddilovky', 'hlas')) {
-            $this->redirect('Homepage:default');
-        }
+        //todo: kontrola zda ma uzivatel pristup  k hlasu ktery chce pouzit
+//        if (!$this->user->isAllowed('bodOddilovky', 'hlas')) {
+//            $this->redirect('Homepage:default');
+//        }
         $values = $form->getValues();
         $this->oddilovkyAPI->newHlas($values->text, $values->hlas, $this->getParameter('id'));
     }
     
     public function novyBodOddilovkySuccess(UI\Form $form)
     {
-        if (!$this->user->isAllowed('bodOddilovky', 'coment')) {
+        if (!$this->user->isAllowed('bodOddilovky', 'create')) {
             $this->redirect('Homepage:default');
+            return false;
         }
         $values = $form->getValues();
         $this->oddilovkyAPI->addBodOddilovky($this->getParameter('id'), $this->user->id, $values->name, $values->popis, $values->text);
@@ -154,6 +161,8 @@ class OddilovkyPresenter extends \BasePresenter
 
     public function updateHlasSuccess($form)
     {
+        //todo: overeni zda ma uzivatel opravdu pristup k hlasu ktery chce upravit
+
         $values = $form->getValues();
         $this->oddilovkyAPI->updateHlas($values->text, $form->name);
     }

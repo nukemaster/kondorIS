@@ -1,7 +1,7 @@
 {block content}
 
 <h1>Bod oddilovky</h1>
-<div class="fixed-action-btn"><a style="float: right" href="{plink Oddilovky:read $bod->oddilovka_id}"><button class="btn">zpet na oddilovku</button></a></div>
+<div class="fixed-action-btn"><a style="float: right" href="{plink Oddilovky:read $bod->oddilovka_id}"><button class="btn waves-effect waves-light">zpet na oddilovku</button></a></div>
 <h2>{$bod->name}</h2>
 <table class="table">
     <tbody>
@@ -15,45 +15,31 @@
         </tr>
     </tbody>
 </table>
-
-<p>{$bod->text|noescape}
+    <p>{$bod->text|noescape}
     <h2>Hlasy</h2>
-<table class="table">
-    <tbody>
-        {foreach $komentareHlasy as $komentarHlas}
-            <tr>
-                <td style="max-width: 50px; vertical-align: top; ">
-                    {$komentarHlas->name}
-                    <br>
-                    {$komentarHlas->create}
-                </td>
-                <td>
-                    {if $komentarHlas->canUpdate}
-                        {form updateHlas-$komentarHlas->id}
-                            <div class="row" style="margin-bottom: 0px">
-                                <div class="input-field col s10">
-                                    {input text class=>'materialize-textarea'}
-                                </div>
-                                <div class="col s2"></div>
-                            </div>
-                            <div class="row" style="margin-bottom: 0px">
-                                <div class="col s2 right">
-                                    <button class="btn waves-effect waves-light right" type="submit" name="action" style="position: relative; top: -56px;">Upravit
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                </div>
-                            </div>
-                        {/form}
+    {foreach $komentareHlasy as $komentarHlas}
+        <div class="row">
+            <div class="col s2">
+                {$komentarHlas->name}
+                <br>
+                {$komentarHlas->create}
+            </div>
+            <div class="col s10">
+                {if $komentarHlas->canUpdate}
+                    {form updateHlas-$komentarHlas->id}
+                        <div class="input-field">
+                            {input text class=>'materialize-textarea'}
+                        </div><button class="btn waves-effect waves-light right" type="submit" name="action" style="position: relative; top: -56px;">Upravit
+                        <i class="material-icons right">send</i>
+                    </button>
 
-                    {else}
-                        {$komentarHlas->text|noescape}
-                    {/if}
-
-                </td>
-            </tr>
-        {/foreach}
-    </tbody>
-</table>
+                    {/form}
+                {else}
+                    {$komentarHlas->text|noescape}
+                {/if}
+            </div>
+        </div>
+    {/foreach}
 
 {form hlasyForm}
     {if ($canCommentHlas)}
@@ -70,22 +56,18 @@
 {/form}
 
 <h2>Diskuze</h2>
-    <table class="table">
-        <tbody>
-            {foreach $komentareDiskuze as $komentarDiskuze}
-                <tr>
-                    <td style="max-width: 50px; vertical-align: top;">
-                        {$komentarDiskuze->name}
-                        <br>
-                        {$komentarDiskuze->time}
-                    </td>
-                    <td>
-                        {$komentarDiskuze->text|noescape}
-                    </td>
-                </tr>
-            {/foreach}
-        </tbody>
-    </table>
+    {foreach $komentareDiskuze as $komentarDiskuze}
+        <div class="row">
+            <div class="col s2" style="height: 100%">
+                {$komentarDiskuze->name}
+                <br>
+                {$komentarDiskuze->time}
+            </div>
+            <div class="col s10">
+                {$komentarDiskuze->text|noescape}
+            </div>
+        </div>
+    {/foreach}
 {if $canCommentDiskuze}
     {form diskuzeForm}
         <div class="input-field">

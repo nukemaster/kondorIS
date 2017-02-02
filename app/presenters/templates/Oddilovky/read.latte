@@ -11,7 +11,7 @@
                 <td><b>Do: </b>{$oddilovka->aktivni_do}</td>
             </tr>
             <tr>
-                <td colspan="2"><b>Popis: </b>{$oddilovka->popis_long}</td>
+                <td colspan="2"><b>Popis: </b>{$oddilovka->popis_long|noescape}</td>
             </tr>
         </tbody>
     </table>
@@ -25,7 +25,7 @@
                 <td style="vertical-align: middle"><b>{$bod->name}</b></td>
                 <td style="vertical-align: middle">{$bod->author}</td>
                 <td style="vertical-align: middle">{$bod->vytvoreno}</td>
-                <td style="text-align: right"><a href="{plink Oddilovky:readPoint $bod->id}"><button class="btn">Podrobnosti</button></a></td>
+                <td style="text-align: right"><a href="{plink Oddilovky:readPoint $bod->id}"><button class="btn waves-effect waves-light">Podrobnosti</button></a></td>
             </tr>
             <tr>
                 <td colspan="4" style="border: 0px">{$bod->popis}</td>
@@ -34,6 +34,12 @@
                 <td colspan="4" style="border: 0px"></td>
             </tr>
         </tr>
+        {*<div style = "">*}
+            {*<div><b>{$bod->name}</b></div>*}
+            {*<div>{$bod->author}</div>*}
+            {*<div>{$bod->vytvoreno}</div>*}
+            {*<div>{$bod->author}</div>*}
+        {*</div>*}
     {/foreach}
     </tbody>
     </table>

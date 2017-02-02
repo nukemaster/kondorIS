@@ -1,5 +1,4 @@
 <?php
-//todo: ACL
 namespace App\model;
 
 use Nette;

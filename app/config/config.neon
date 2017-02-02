@@ -1,0 +1,21 @@
+parameters:
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+    - components\IRegistrationFactory
+    - components\ILoginFactory
+    authorizator:
+        class: App\model\Acl
+    authenticator:
+        App\model\UserManager
+    router: App\RouterFactory::createRouter

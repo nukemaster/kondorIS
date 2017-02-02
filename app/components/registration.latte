@@ -1,0 +1,45 @@
+{ifset $exeptionMessage}
+    {$exeptionMessage}
+{/ifset}
+
+{if (isset($success) && ($success != 0))}
+        Úspěšná registrace.
+{else}
+<h1>Registrace</h1>
+    {form registrationForm}
+        <div class="input-field">
+            <i class="material-icons prefix">account_circle</i>
+            {label name}
+                {input name class => 'validate'}
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">vpn_key</i>
+            {label password}
+                {input password class => 'validate'}
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">vpn_key</i>
+            {label password2}
+                    {input password2 class => 'validate'}
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">email</i>
+            {label email data-error => 'wrong', data-success => 'right'}
+                    {input email class => 'validate'}
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">account_circle</i>
+            {label realName}
+                    {input realName class => 'validate'}
+        </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action">Registrovat
+        <i class="material-icons right">send</i>
+    </button>
+
+    {/form}
+{/if}

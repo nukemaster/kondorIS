@@ -1,0 +1,58 @@
+{block content}
+    <h1>Oddílovka</h1>
+    <table class="">
+        <tbody>
+            <tr>
+                <td><b>Název: </b>{$oddilovka->popis_short}</td>
+                <td><b>Autor: </b>{$oddilovka->name}</td>
+            </tr>
+            <tr>
+                <td><b>Od: </b>{$oddilovka->aktivni_od}</td>
+                <td><b>Do: </b>{$oddilovka->aktivni_do}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Popis: </b>{$oddilovka->popis_long}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Body k projednání</h2>
+    <table>
+    <tbody>
+    {foreach $body as $bod}
+        <tr>
+            <tr style="border-top: solid 1px lightgray">
+                <td style="vertical-align: middle"><b>{$bod->name}</b></td>
+                <td style="vertical-align: middle">{$bod->author}</td>
+                <td style="vertical-align: middle">{$bod->vytvoreno}</td>
+                <td style="text-align: right"><a href="{plink Oddilovky:readPoint $bod->id}"><button class="btn">Podrobnosti</button></a></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border: 0px">{$bod->popis}</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border: 0px"></td>
+            </tr>
+        </tr>
+    {/foreach}
+    </tbody>
+    </table>
+
+    {if $canCreateBodOddilovky}
+<h2>Novy bod oddilovky</h2>
+{form novyBodOddilovky}
+    <div class="input-field">
+    {input name}{label name}
+    </div>
+    <div class="input-field">
+    {input popis}{label popis}
+    </div>
+    <div class="input-field">
+    {input text class => "materialize-textarea"}{label text}
+    </div>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Odeslat
+        <i class="material-icons right">send</i>
+    </button>
+{/form}
+    {/if}
+{/block}

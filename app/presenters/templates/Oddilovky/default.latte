@@ -1,0 +1,54 @@
+{block content}
+    <h1>Oddílovky</h1>
+
+    {if canCreateNewOddilovka}
+       {form newOddilovkaForm}
+            {label date}{input date}
+            {label popis}{input popis}
+           <div class="input-field">
+               {input popisLong class=>'materialize-textarea'}{label popisLong}
+
+           <button class="btn waves-effect waves-light" type="submit" name="action">Vytvořit
+               <i class="material-icons right">send</i>
+           </button>
+       {/form}
+    {/if}
+
+
+    <table class="highlight">
+        <thead>
+            <tr>
+                <th data-field="od">Od</th>
+                <th data-field="do">Do</th>
+                <th data-field="popis">Popis</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $oddilovky as $oddilovka}
+                <tr class='clickable-row' data-href='{link Oddilovky:read $id = $oddilovka->id}' style='cursor:pointer'>
+                    <td >{$oddilovka->aktivni_od}</td>
+                    <td >{$oddilovka->aktivni_do}</td>
+                    <td >{$oddilovka->popis_short}</td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+
+
+{/block}
+
+{block scripts}
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+
+    </script>
+{/block}

@@ -1,0 +1,101 @@
+{block content}
+
+<h1>Bod oddilovky</h1>
+<div class="fixed-action-btn"><a style="float: right" href="{plink Oddilovky:read $bod->oddilovka_id}"><button class="btn">zpet na oddilovku</button></a></div>
+<h2>{$bod->name}</h2>
+<table class="table">
+    <tbody>
+        <tr>
+            <td><b>Autor: </b>{$bod->author}</td>
+            <td><b>Vytvořeno </b>{$bod->vytvoreno}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><b>Popis: </b>{$bod->popis|noescape}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>{$bod->text|noescape}
+    <h2>Hlasy</h2>
+<table class="table">
+    <tbody>
+        {foreach $komentareHlasy as $komentarHlas}
+            <tr>
+                <td style="max-width: 50px; vertical-align: top; ">
+                    {$komentarHlas->name}
+                    <br>
+                    {$komentarHlas->create}
+                </td>
+                <td>
+                    {if $komentarHlas->canUpdate}
+                        {form updateHlas-$komentarHlas->id}
+                            <div class="row" style="margin-bottom: 0px">
+                                <div class="input-field col s10">
+                                    {input text class=>'materialize-textarea'}
+                                </div>
+                                <div class="col s2"></div>
+                            </div>
+                            <div class="row" style="margin-bottom: 0px">
+                                <div class="col s2 right">
+                                    <button class="btn waves-effect waves-light right" type="submit" name="action" style="position: relative; top: -56px;">Upravit
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        {/form}
+
+                    {else}
+                        {$komentarHlas->text|noescape}
+                    {/if}
+
+                </td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+
+{form hlasyForm}
+    {if ($canCommentHlas)}
+        <div class="input-field">
+            {input hlas}{label hlas}
+        </div>
+        <div class="input-field">
+            {input text class => "materialize-textarea"}{label text}
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Odeslat
+            <i class="material-icons right">send</i>
+        </button>
+    {/if}
+{/form}
+
+<h2>Diskuze</h2>
+    <table class="table">
+        <tbody>
+            {foreach $komentareDiskuze as $komentarDiskuze}
+                <tr>
+                    <td style="max-width: 50px; vertical-align: top;">
+                        {$komentarDiskuze->name}
+                        <br>
+                        {$komentarDiskuze->time}
+                    </td>
+                    <td>
+                        {$komentarDiskuze->text|noescape}
+                    </td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+{if $canCommentDiskuze}
+    {form diskuzeForm}
+        <div class="input-field">
+            {input text class => "materialize-textarea"}{label text}
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit" name="action">Odeslat
+            <i class="material-icons right">send</i>
+        </button>
+    {/form}
+{/if}
+
+{/block}

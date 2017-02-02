@@ -1,0 +1,32 @@
+{if $isLogedIn == FALSE}
+    {ifset $exeptionMessage}{$exeptionMessage}{/ifset}
+<h1>Přihlášení</h1>
+    {form loginForm}
+        <div class="input-field">
+            <i class="material-icons prefix">account_circle</i>
+            {label name}
+            {input name class => 'validate'}
+        </div>
+
+        <div class="input-field">
+            <i class="material-icons prefix">vpn_key</i>
+            {label password}
+            {input password class => 'validate'}
+        </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action">Přihlásit
+        <i class="material-icons right">send</i>
+    </button>
+
+{/form}
+
+{else}
+    <ul class="nav navbar-nav nav-flex-icons">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User <i class="fa fa-user"></i></a>
+            <div class="dropdown-menu dropdown-secondary" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                <a class="dropdown-item waves-effect waves-light" n:href="Homepage:logOff">Odhlásit</a>
+            </div>
+        </li>
+    </ul>
+{/if}

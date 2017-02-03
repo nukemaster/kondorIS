@@ -16,6 +16,60 @@ class OddilovkyPresenter extends \BasePresenter
         $this->oddilovkyAPI = new App\model\OddilovkyAPI($database);
     }
 
+    public function handleDownload($id)
+    {
+        $oddilovka = $this->oddilovkyAPI->getOddilovkaByID($id);
+        $bodyOddilovky = $this->oddilovkyAPI->getBodyOddilovky($id);
+        $filename = "oddilovka-$oddilovka->aktivni_do";
+        $filecontent = "";
+
+        $filecontent .= "Výpis z informačního systému KondorIS \n";
+        $filecontent .= "Vytvořeno: " . date("Y-n-j G:i") . "\n\n";
+        $filecontent .= "----------------------------------------------------------------------\n";
+        $filecontent .= "------------------------------ ODDÍLOVKA -----------------------------\n";
+        $filecontent .= "----------------------------------------------------------------------\n";
+
+        $filecontent .= "\n$oddilovka->popis_short\n";
+        $filecontent .= "Od: $oddilovka->aktivni_do Do: $oddilovka->aktivni_do\n";
+        $filecontent .= "Autor: $oddilovka->name";
+        $filecontent .= "\n$oddilovka->popis_long\n";
+
+        foreach ($bodyOddilovky as $bod1) {
+            $bod = $this->oddilovkyAPI->getBodOddilovkyByID($bod1->id); //b.name, b.vytvoreno, b.oddilovka_id, b.popis, b.text, users.name author
+            $filecontent .= "----------------------------------------------------------------------\n";
+            $filecontent .= "---------------------------- BOD ODDÍLOVKY ---------------------------\n";
+            $filecontent .= "----------------------------------------------------------------------\n\n";
+
+            $filecontent .= "$bod->name\n";
+            $filecontent .= "Autor: $bod->author $bod->vytvoreno\n";
+            $filecontent .= "Popis: $bod->popis\n\n";
+            $filecontent .= "$bod->text\n\n";
+
+            $filecontent .= "-------------------------------- HLASY -------------------------------\n";
+
+            foreach ($this->oddilovkyAPI->getKomentareHlasyOnPointID($bod1->id, $this->user->id) as $hlas) { //hlas.name, k.text,
+                $filecontent .= "----------------------------------------------------------------------\n\n";
+                $filecontent .= "Hlas: $hlas->name\n";
+                $filecontent .= "$hlas->text\n\n";
+            }
+        }
+        $filecontent = str_replace("<br>", "\n", $filecontent);
+        $filecontent = wordwrap($filecontent);
+
+
+        $filesize = strlen($filecontent);
+
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Length: ". $filesize);
+        header("Content-Disposition: attachment; filename=". $filename);
+        header("Content-Type: application/octet-stream; ");
+        header("Content-Transfer-Encoding: binary");
+
+        echo $filecontent;
+
+    }
+
     public function beforeRender()
     {
         \BasePresenter::beforeRender();

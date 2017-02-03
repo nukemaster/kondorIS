@@ -31,7 +31,7 @@ class OddilovkyAPI
 
     public function getOddilovkaByID($id)
     {
-        $sql = "SELECT o.aktivni_od, o.aktivni_do, o.popis_short, o.popis_long, users.name 
+        $sql = "SELECT DATE_FORMAT(o.aktivni_od,'%y-%m-%d') as aktivni_od, DATE_FORMAT(o.aktivni_do,'%y-%m-%d') as aktivni_do, o.popis_short, o.popis_long, users.name 
                   FROM oddilovky o  
                   INNER JOIN users
                   ON o.autor = users.id

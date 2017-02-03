@@ -28,7 +28,7 @@ class HomepagePresenter extends \BasePresenter
     }
 
     public function renderLogged() {
-        //dump();
+        $this->template->isAllowedAdministrace = $this->user->isAllowed("administrace", "enter");
     }
 
     public function createComponentLogInForm()

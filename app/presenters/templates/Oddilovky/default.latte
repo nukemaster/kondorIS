@@ -15,25 +15,41 @@
     {/if}
 
 
-    <table class="highlight">
-        <thead>
-            <tr>
-                <th data-field="od">Od</th>
-                <th data-field="do">Do</th>
-                <th data-field="popis">Popis</th>
-            </tr>
-        </thead>
-        <tbody>
-            {foreach $oddilovky as $oddilovka}
-                <tr class='clickable-row' data-href='{link Oddilovky:read $id = $oddilovka->id}' style='cursor:pointer'>
-                    <td >{$oddilovka->aktivni_od}</td>
-                    <td >{$oddilovka->aktivni_do}</td>
-                    <td >{$oddilovka->popis_short}</td>
-                </tr>
-            {/foreach}
-        </tbody>
-    </table>
+    {*<table class="highlight">*}
+        {*<thead>*}
+            {*<tr>*}
+                {*<th data-field="od">Od</th>*}
+                {*<th data-field="do">Do</th>*}
+                {*<th data-field="popis">Popis</th>*}
+            {*</tr>*}
+        {*</thead>*}
+        {*<tbody>*}
+            {*{foreach $oddilovky as $oddilovka}*}
+                {*<tr class='clickable-row' data-href='{link Oddilovky:read $id = $oddilovka->id}' style='cursor:pointer'>*}
+                    {*<td >{$oddilovka->aktivni_od}</td>*}
+                    {*<td >{$oddilovka->aktivni_do}</td>*}
+                    {*<td >{$oddilovka->popis_short}</td>*}
+                {*</tr>*}
+            {*{/foreach}*}
+        {*</tbody>*}
+    {*</table>*}
 
+    <div class="row">
+        <div class="col s1">Od</div>
+        <div class="col s1">Do</div>
+        <div class="col s8">Popis</div>
+        <div class="col s1">Akce</div>
+        <div class="col s1">Akce</div>
+    </div>
+    {foreach $oddilovky as $oddilovka}
+    <div class="row">
+        <div class="col s1">{$oddilovka->aktivni_od}</div>
+        <div class="col s1">{$oddilovka->aktivni_do}</div>
+        <div class="col s8">{$oddilovka->popis_short}</div>
+        <div class="col s1"><a n:href="download! $oddilovka->id" class="btn waves-effect waves-light">Download</a></div>
+        <div class="col s1"><a n:href="Oddilovky:read $oddilovka->id" class="btn waves-effect waves-light">Podrobnosti</a></div>
+    </div>
+    {/foreach}
 
 {/block}
 

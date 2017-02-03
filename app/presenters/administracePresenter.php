@@ -18,6 +18,7 @@ class AdministracePresenter extends \BasePresenter
 
     public function beforeRender()
     {
+        \BasePresenter::beforeRender();
         if (! $this->user->isAllowed("administrace", "enter")) {
             $this->redirect('Homepage:default');
         }

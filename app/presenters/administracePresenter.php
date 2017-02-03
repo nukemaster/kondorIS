@@ -1,6 +1,6 @@
 <?php
 namespace App\Presenters;
-
+//todo: omezit pristup
 use Nette,
     App,
     Nette\Application\UI,
@@ -14,6 +14,13 @@ class AdministracePresenter extends \BasePresenter
     public function __construct(Nette\Database\Context $database)
     {
         $this->administraceAPI = new App\model\AdministraceAPI($database);
+    }
+
+    public function beforeRender()
+    {
+        if (! $this->user->isAllowed("administrace", "enter")) {
+            $this->redirect('Homepage:default');
+        }
     }
 
     public function renderDefault()

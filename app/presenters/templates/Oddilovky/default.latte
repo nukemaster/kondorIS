@@ -39,15 +39,13 @@
         <div class="col s1">Do</div>
         <div class="col s8">Popis</div>
         <div class="col s1">Akce</div>
-        <div class="col s1">Akce</div>
     </div>
     {foreach $oddilovky as $oddilovka}
     <div class="row">
         <div class="col s1">{$oddilovka->aktivni_od}</div>
         <div class="col s1">{$oddilovka->aktivni_do}</div>
-        <div class="col s8">{$oddilovka->popis_short}</div>
-        <div class="col s1"><a n:href="download! $oddilovka->id" class="btn waves-effect waves-light">Download</a></div>
-        <div class="col s1"><a n:href="Oddilovky:read $oddilovka->id" class="btn waves-effect waves-light">Podrobnosti</a></div>
+        <div class="col s6">{$oddilovka->popis_short}</div>
+        <div class="col s4" style="text-align: right"><a n:href="download! $oddilovka->id" class="btn waves-effect waves-light"><i class="material-icons">file_download</i></a> <a n:href="Oddilovky:read $oddilovka->id" class="btn waves-effect waves-light">Podrobnosti</a></div>
     </div>
     {/foreach}
 

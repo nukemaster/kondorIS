@@ -178,7 +178,7 @@ CREATE TABLE `oddilovky` (
   `id` int(11) NOT NULL,
   `aktivni_od` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `aktivni_do` datetime NOT NULL,
-  `popis_short` varchar(50) COLLATE cp1250_czech_cs DEFAULT NULL,
+  `popis_short` varchar(75) COLLATE cp1250_czech_cs DEFAULT NULL,
   `popis_long` text COLLATE cp1250_czech_cs,
   `autor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=cp1250 COLLATE=cp1250_czech_cs;

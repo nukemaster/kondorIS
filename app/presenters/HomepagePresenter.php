@@ -28,6 +28,9 @@ class HomepagePresenter extends \BasePresenter
     }
 
     public function renderLogged() {
+        if (! $this->user->loggedIn) {
+            $this->redirect('Homepage:default');
+        }
         $this->template->isAllowedAdministrace = $this->user->isAllowed("administrace", "enter");
     }
 
